@@ -1,23 +1,21 @@
 
 import { useFormik } from "formik";  /// For using useFormic Hoox. But we can use Formik Component
+import * as Yup from 'yup';
 
-
-const validate = values => {   /// Own validation. We can use this ot Yup result will be the same but Yup counts more comfortable to use.
-    const errors = {};
-    if (!values.name) {
-        errors.name = 'Required!';
-    } else if (values.name.length < 2) {
-        errors.name = 'Min length is 2!';
-    }
-    if (!values.email) {
-        errors.email = 'Required';
-    } else if ( !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) { 
-        errors.email = 'Invalid Email!';
-    }
-    return errors;
-}
-
-
+// const validate = values => {   /// Own validation. We can use this ot Yup result will be the same but Yup counts more comfortable to use.
+//     const errors = {};
+//     if (!values.name) {
+//         errors.name = 'Required!';
+//     } else if (values.name.length < 2) {
+//         errors.name = 'Min length is 2!';
+//     }
+//     if (!values.email) {
+//         errors.email = 'Required';
+//     } else if ( !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) { 
+//         errors.email = 'Invalid Email!';
+//     }
+//     return errors;
+// }
 
 
 const Form = () => {
@@ -31,7 +29,24 @@ const Form = () => {
             text: '',
             terms: false,
         },
-        validate,   /// Own validation. We can use this ot Yup result will be the same but Yup counts more comfortable to use.
+        // validate,   /// Own validation. We can use this ot Yup result will be the same but Yup counts more comfortable to use.
+        validationSchema: Yup.object({
+            name: Yup.string()
+                    .min(2, 'Minimum 2 symbols !')
+                    .required('Required area !'),
+            email: Yup.string()
+                    .email('Invalid Email !')
+                    .required('Required area !'),
+            amount: Yup.number()
+                    .min(2, 'Minimum 2 symbols !')
+                    .required('Required !'),
+            currency: Yup.string().required('Choose Currency !'),
+            text: Yup.string()
+                    .min(10, 'Minimum 10 symbols !'),
+            terms: Yup.boolean()
+                    .required('Required to agree with terms !')
+                    .oneOf([true], 'Required to agree with terms !'),
+        }),
         onSubmit: values => console.log(JSON.stringify(values, null, 2))
     })
 
