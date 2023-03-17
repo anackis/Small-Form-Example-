@@ -137,7 +137,7 @@ const CustomForm = () => {
                 <MyCheckBox name="terms">
                     Agree with the confidentiality policy?
                 </MyCheckBox>
-                <button type="submit">Отправить</button>
+                <button type="submit">Send</button>
             </Form>
         </Formik>
     )
